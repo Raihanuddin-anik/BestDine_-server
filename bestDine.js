@@ -12,25 +12,28 @@ const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://Food_Hunter:Food431760@cluster0.ostva.mongodb.net/Food_BD?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
-  const collection = client.db("Food_BD").collection('inventory');
+  const collection = client.db("Food_BD").collection('Organic_Food');
 
 
-  app.post('/data', (req, res) => {
-    const products = {
-        item: 'canvas',
-        qty: 100,
-        tags: ['cotton'],
-        size: { h: 28, w: 35.5, uom: 'cm' }
-      }
+  app.post('/addMeals', (req, res)=>{
+    const products = req.body
+    console.log(products)
+    collection.insertMany(products)
+    .then(result =>{
+      console.log(result)
+      res.send(result.insertedCount > 0)
+       
+    })
 
-      collection.insertMany(products)
-      .then(result => {
-        console.log(result.insertedCount)
-        res.send(result.insertedCount > 0)
+})
 
-      })
 
-  })
+app.get('/Meals',(req, res) =>{
+  collection.find({})
+  .toArray((err, document)=>{
+    res.send(document)
+  }) 
+})
 
 });
 app.listen(3100, console.log('Hello world'))
