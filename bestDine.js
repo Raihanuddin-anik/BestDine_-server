@@ -13,27 +13,47 @@ const uri = "mongodb+srv://Food_Hunter:Food431760@cluster0.ostva.mongodb.net/Foo
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const collection = client.db("Food_BD").collection('Organic_Food');
+  const IngredientCollection = client.db("Food_BD").collection('ingredient');
 
 
-  app.post('/addMeals', (req, res)=>{
+
+  app.post('/addMeals', (req, res) => {
     const products = req.body
     console.log(products)
     collection.insertMany(products)
-    .then(result =>{
-      console.log(result)
-      res.send(result.insertedCount > 0)
-       
-    })
+      .then(result => {
+        console.log(result)
+        res.send(result.insertedCount > 0)
 
-})
+      })
 
+  })
 
-app.get('/Meals',(req, res) =>{
-  collection.find({})
-  .toArray((err, document)=>{
-    res.send(document)
-  }) 
-})
+  app.get('/Meals', (req, res) => {
+    collection.find({})
+      .toArray((err, document) => {
+        res.send(document)
+      })
+  })
+
+  app.post('/addIngredient', (req, res) => {
+    const products = req.body
+    IngredientCollection.insertMany(products)
+      .then(result => {
+        console.log(result)
+        res.send(result.insertedCount > 0)
+
+      })
+
+  })
+
+ app.get('/Ingredients', (req, res) => {
+  IngredientCollection.find({})
+      .toArray((err, document) => {
+        res.send(document)
+      })
+  })
+ 
 
 });
 app.listen(3100, console.log('Hello world'))
