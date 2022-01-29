@@ -19,10 +19,9 @@ client.connect(err => {
 
   app.post('/addMeals', (req, res) => {
     const products = req.body
-    console.log(products)
+
     collection.insertMany(products)
       .then(result => {
-        console.log(result)
         res.send(result.insertedCount > 0)
 
       })
@@ -40,7 +39,6 @@ client.connect(err => {
     const products = req.body
     IngredientCollection.insertMany(products)
       .then(result => {
-        console.log(result)
         res.send(result.insertedCount > 0)
 
       })
@@ -55,11 +53,9 @@ client.connect(err => {
   })
   app.post('/addOrder', (req, res) => {
     const Order = req.body
-    console.log(Order)
+
     OrdersCollection.insertOne(Order)
       .then(result => {
-        console.log(result)
-        console.log(result.insertedCount)
         res.send(result.insertedCount > 0)
 
       })
