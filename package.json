@@ -4,8 +4,8 @@
   "description": "",
   "main": "bestDine.js",
   "scripts": {
-    "start" : "node bestDine.js",
-    "start: dev": "nodemon bestDine.js",
+    "start" : "node index.js",
+    "start: dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
