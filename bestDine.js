@@ -19,7 +19,6 @@ client.connect(err => {
 
   app.post('/addMeals', (req, res) => {
     const products = req.body
-
     collection.insertMany(products)
       .then(result => {
         res.send(result.insertedCount > 0)
@@ -53,7 +52,6 @@ client.connect(err => {
   })
   app.post('/addOrder', (req, res) => {
     const Order = req.body
-
     OrdersCollection.insertOne(Order)
       .then(result => {
         res.send(result.insertedCount > 0)
