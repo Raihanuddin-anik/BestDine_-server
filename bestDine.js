@@ -16,17 +16,6 @@ client.connect(err => {
   const IngredientCollection = client.db("Food_BD").collection('ingredient');
   const OrdersCollection = client.db("Food_BD").collection('orders');
 
-
-  app.post('/addMeals', (req, res) => {
-    const products = req.body
-    collection.insertMany(products)
-      .then(result => {
-        res.send(result.insertedCount > 0)
-
-      })
-
-  })
-
   app.get('/Meals', (req, res) => {
     collection.find({})
       .toArray((err, document) => {
@@ -34,15 +23,7 @@ client.connect(err => {
       })
   })
 
-  app.post('/addIngredient', (req, res) => {
-    const products = req.body
-    IngredientCollection.insertMany(products)
-      .then(result => {
-        res.send(result.insertedCount > 0)
-
-      })
-
-  })
+ 
 
   app.get('/Ingredients', (req, res) => {
     IngredientCollection.find({})
