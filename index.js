@@ -14,8 +14,8 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
   const collection = client.db("Food_BD").collection('Organic_Food');
   const IngredientCollection = client.db("Food_BD").collection('ingredient');
-  const OrdersCollection = client.db("Food_BD").collection('orders');
-
+  const ShefCollection = client.db("Food_BD").collection('Shefs');
+  
   app.get('/Meals', (req, res) => {
     collection.find({})
       .toArray((err, document) => {
@@ -23,7 +23,12 @@ client.connect(err => {
       })
   })
 
- 
+  app.get('/shefs', (req, res) => {
+    ShefCollection.find({})
+      .toArray((err, document) => {
+        res.send(document)
+      })
+  })
 
   app.get('/Ingredients', (req, res) => {
     IngredientCollection.find({})
@@ -31,6 +36,16 @@ client.connect(err => {
         res.send(document)
       })
   })
+  app.post('/addOrder', (req, res) => {
+    const Order = req.body
+    OrdersCollection.insertOne(Order)
+      .then(result => {
+        res.send(result.insertedCount > 0)
+
+      })
+
+  })
+ 
   app.post('/addOrder', (req, res) => {
     const Order = req.body
     OrdersCollection.insertOne(Order)
